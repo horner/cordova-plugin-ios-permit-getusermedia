@@ -28,8 +28,11 @@
                                       type: (WKMediaCaptureType) type
                            decisionHandler: (void (^)(WKPermissionDecision decision)) decisionHandler
 {
-    if ([origin.protocol isEqualToString:@"file"]) {
-        NSLog(@"Supressing media permission request for file origin");
+    BOOL isFileOrigin = [origin.protocol isEqualToString:@"file"];
+    BOOL isLocalhostOrigin = ([origin.protocol isEqualToString:@"http"] || [origin.protocol isEqualToString:@"https"]) && [origin.host isEqualToString:@"localhost"];
+    
+    if (isFileOrigin || isLocalhostOrigin) {
+        NSLog(@"Supressing media permission request for %@ origin", isFileOrigin ? @"file" : @"localhost");
         decisionHandler(WKPermissionDecisionGrant);
     } else {
         decisionHandler(WKPermissionDecisionPrompt);
