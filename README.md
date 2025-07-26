@@ -22,11 +22,11 @@ on the `WKWebView`. Whenever the JS code in the web view calls
 “permission decision” by sending it a
 [`webView:requestMediaCapturePermissionForOrigin:initiatedByFrame:type:decisionHandler:`](https://developer.apple.com/documentation/webkit/wkuidelegate/3763087-webview?language=objc)
 message. The plugin checks the protocol of the origin, and if it’s `file` or
-`localhost` (http/https) then it makes an “allow” decision, which suppresses the
-permission dialog. For all other origins it makes the default “prompt” decision,
-so if you’re running `getUserMedia` from web pages loaded from outside the app,
-they will continue to prompt for permission. If you need to allow that, feel
-free to fork this plugin.
+`localhost` (http/https), or `127.0.0.1` (http/https) then it makes an "allow"
+decision, which suppresses the permission dialog. For all other origins it makes
+the default “prompt” decision, so if you’re running `getUserMedia` from web
+pages loaded from outside the app, they will continue to prompt for permission.
+If you need to allow that, feel free to fork this plugin.
 
 Note that all other `WKUIDelegate` messages are forwarded to the original
 delegate that was in place when this plugin is loaded, so the other functions of
